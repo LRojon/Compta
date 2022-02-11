@@ -32,6 +32,7 @@ h1 {
     border-top-left-radius: 13px;
     border-top-right-radius: 13px;
     margin-top: 0px;
+    font-size: 3rem;
 }
 
 .primary {
@@ -70,20 +71,23 @@ h1 {
     border-bottom-left-radius: 15px;
     padding-left: 7px;
     color: var(--color-text-primary);
+    font-size: 1.2rem;
 }
 .salary > span {
     color: black;
     margin-right: 5px;
     margin-left: 5px;
+    font-size: 1.3rem;
 }
 
 .tab {
     flex: 10;
-    width: 50%;
+    width: 75%;
 }
 .lines {
     width: 100%;
     border-collapse: collapse;
+    font-size: 1.2rem;
 }
 .lines thead {
     background-color: var(--color-primary);
@@ -116,6 +120,7 @@ h1 {
     flex: 1;
     width: 25%;
     justify-content: space-between;
+    font-size: 1.2rem;
 }
 
 .infobulle {
