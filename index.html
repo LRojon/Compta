@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
+        <meta http-equiv="refresh" content="10"> 
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,17 +11,51 @@
     </head>
     <body>
         <div class="main">
-            <div>
-                <input type="number" name="gsdfsdf" id=""><span></span>
-            </div>
-            <div class="tab"></div>
-            <div>
-                <span>salut</span>
-                <span>salut</span>
-            </div>
-            <div>
-                <span>salut</span>
-                <span>salut</span>
+            <h1>Compta</h1>
+            <div class="primary">
+                <div class="salaryLine">
+                    <div class="salary">
+                        <input type="number" name="salary" id="salary" placeholder="Salaire">
+                        <span>€</span>
+                    </div>
+                </div>
+                <div id="tab" class="tab">
+                    <!-- Générer par le script -->
+                    <table class="lines">
+                        <thead>
+                            <tr>
+                                <th>Libellé</th>
+                                <th>Montant</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Loyer</td>
+                                <td>-640,00 €</td>
+                            </tr>
+                            <tr>
+                                <td>APL</td>
+                                <td>106,00 €</td>
+                            </tr>
+                            <tr>
+                                <td>Electricité</td>
+                                <td>-47,00 €</td>
+                            </tr>
+                            <tr>
+                                <td>Course</td>
+                                <td>-70,00 €</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="resultLine" >
+                    <span class="infobulle" aria-label="25% du restant">Economie</span>
+                    <span id="saving">50,00€</span>
+                </div>
+                <div class="resultLine" >
+                    <span class="infobulle" aria-label="Le restant" >Plaisir</span>
+                    <span id="pleasure" >0,00€</span>
+                </div>
             </div>
         </div>
     </body>

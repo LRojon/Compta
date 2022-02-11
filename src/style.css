@@ -3,3 +3,157 @@
     --color-background: #383c4a;
     --color-text-primary: #ccc;
 }
+
+body {
+    display: flex;
+    width: 99vw;
+    height: 97vh;
+    background-color: var(--color-background);
+    color: var(--color-text-primary);
+    align-items: center;
+    justify-content: center;
+}
+
+.main {
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+    height: 80%;
+    border: solid 1px var(--color-primary);
+    border-radius: 15px;
+}
+
+h1 {
+    flex: 1;
+    background-color: var(--color-primary);
+    width: 100%;
+    color: white;
+    text-align: center;
+    border-top-left-radius: 13px;
+    border-top-right-radius: 13px;
+    margin-top: 0px;
+}
+
+.primary {
+    display: flex;
+    flex-direction: column;
+    flex: 12;
+    align-items: center;
+    justify-content: center;
+}
+
+.salaryLine {
+    flex: 1;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.salary{
+    display: flex;
+    border-radius: 15px;
+    border: solid 1px var(--color-primary);
+    background-color: var(--color-primary);
+    margin-right: -20px;
+    justify-content: center;
+    align-items: center;
+    height:min-content;
+}
+.salary > input[type=number]::-webkit-inner-spin-button{
+    opacity: 0;
+}
+.salary > input {
+    -moz-appearance: textfield;
+    background-color: var(--color-background);
+    border: none;
+    border-top-left-radius: 15px;
+    border-bottom-left-radius: 15px;
+    padding-left: 7px;
+    color: var(--color-text-primary);
+}
+.salary > span {
+    color: black;
+    margin-right: 5px;
+    margin-left: 5px;
+}
+
+.tab {
+    flex: 10;
+    width: 50%;
+}
+.lines {
+    width: 100%;
+    border-collapse: collapse;
+}
+.lines thead {
+    background-color: var(--color-primary);
+    color: black;
+    border: solid 1px var(--color-primary)
+}
+.lines tbody > tr:nth-child(2n){
+    background-color: #0002;
+}
+.lines tr > td:nth-child(1) {
+    text-align: left;
+    padding-left: 10px;
+    border-left: solid 1px var(--color-primary);
+}
+.lines tr > td:nth-child(2) {
+    text-align: right;
+    padding-right: 10px;
+    border-left: solid 1px var(--color-primary);
+    border-right: solid 1px var(--color-primary);
+}
+.lines th, .lines td {
+    padding: 5px;
+}
+.lines tr:last-child {
+    border-bottom: solid 1px var(--color-primary);
+}
+
+.resultLine {
+    display: flex;
+    flex: 1;
+    width: 25%;
+    justify-content: space-between;
+}
+
+.infobulle {
+    position: relative;  /*les .picto-item deviennent référents*/
+    cursor: help;
+    border-radius: 50%;
+}
+
+.infobulle:hover:after,
+.infobulle:focus:after {
+    content: attr(aria-label);  /* on affiche aria-label */
+    position: absolute;
+    top: -2.4em;
+    left: 50%;
+    transform: translateX(-50%); /* on centre horizontalement  */
+    z-index: 1; /* pour s'afficher au dessus des éléments en position relative */
+    white-space: nowrap;  /* on interdit le retour à la ligne*/
+    padding: 5px 14px;
+    background: var(--color-primary);
+    color: black;
+    border-radius: 4px;
+    font-size: 1.2rem;
+}
+
+/* on génère un second élément en :before pour la flèche */
+
+[aria-label]:hover:before,
+[aria-label]:focus:before {
+    content: "▼";
+    position: absolute;
+    top: -1em;
+	left: 50%;
+	transform: translateX(-50%); /* on centre horizontalement  */
+    font-size: 20px;
+    color: var(--color-primary);
+}
+
+/* pas de contour durant le :focus */
+[aria-label]:focus {
+    outline: none;
+}
