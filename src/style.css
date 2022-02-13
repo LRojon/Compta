@@ -89,7 +89,7 @@ h1 {
     border-collapse: collapse;
     font-size: 1.2rem;
 }
-.lines thead {
+.lines thead, .lines tfoot {
     background-color: var(--color-primary);
     color: black;
     border: solid 1px var(--color-primary)
@@ -97,16 +97,19 @@ h1 {
 .lines tbody > tr:nth-child(2n){
     background-color: #0002;
 }
-.lines tr > td:nth-child(1) {
+.lines tr > td {
     text-align: left;
     padding-left: 10px;
     border-left: solid 1px var(--color-primary);
 }
 .lines tr > td:nth-child(2) {
     text-align: right;
+}
+.lines tr > td:last-child {
+    width: 15%;
     padding-right: 10px;
-    border-left: solid 1px var(--color-primary);
     border-right: solid 1px var(--color-primary);
+    text-align: center;
 }
 .lines th, .lines td {
     padding: 5px;
@@ -122,6 +125,29 @@ h1 {
     justify-content: space-between;
     font-size: 1.2rem;
 }
+
+div.btn {
+    border: solid 1px #fff2;
+    border-radius: 5px;
+    padding: 2px;
+    width: 20px;
+    height: 20px;
+}
+.remove {
+    background-color: #db2828;
+}
+.remove:hover {
+    background-color: #a31f1f;
+}
+.add {
+    background-color: #6495ed;
+}
+.add:hover {
+    background-color: #5379c0;
+}
+
+
+
 
 .infobulle {
     position: relative;  /*les .picto-item deviennent référents*/

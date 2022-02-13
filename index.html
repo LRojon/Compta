@@ -6,7 +6,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Compta</title>
         <link rel="stylesheet" href="src/style.css">
-        <script src="src/script.js"></script>
+        <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css">
     </head>
     <body>
         <div class="main">
@@ -14,37 +14,29 @@
             <div class="primary">
                 <div class="salaryLine">
                     <div class="salary">
-                        <input type="number" name="salary" id="salary" placeholder="Salaire">
+                        <input type="number" name="salary" id="salary" value="1200" placeholder="Salaire">
                         <span>€</span>
                     </div>
                 </div>
                 <div id="tab" class="tab">
                     <!-- Générer par le script -->
-                    <table class="lines">
+                    <table class="lines" >
                         <thead>
                             <tr>
                                 <th>Libellé</th>
                                 <th>Montant</th>
+                                <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>Loyer</td>
-                                <td>-640,00 €</td>
-                            </tr>
-                            <tr>
-                                <td>APL</td>
-                                <td>106,00 €</td>
-                            </tr>
-                            <tr>
-                                <td>Electricité</td>
-                                <td>-47,00 €</td>
-                            </tr>
-                            <tr>
-                                <td>Course</td>
-                                <td>-70,00 €</td>
-                            </tr>
                         </tbody>
+                        <tfoot>
+                           <tr>
+                               <th>Total</th>
+                               <td id="total" ></td>
+                               <td></td>
+                           </tr>
+                       </tfoot>
                     </table>
                 </div>
                 <div class="resultLine" >
@@ -58,4 +50,5 @@
             </div>
         </div>
     </body>
+    <script src="src/script.js"></script>
 </html>
