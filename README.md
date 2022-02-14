@@ -10,6 +10,6 @@
 - [x] Calcule Total
 - [x] Calcule économie
 - [x] Calcule plaisir
-- [ ] Personalisation de l'économie
+- [x] Personalisation de l'économie
 - [x] Export des lignes
 - [x] Import des lignes
