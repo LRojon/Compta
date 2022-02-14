@@ -6,6 +6,7 @@ const TOTAL = document.querySelector('#total')
 const TBODY = document.querySelector('#tab tbody')
 const SAVE = document.querySelector('#save')
 const OPEN = document.querySelector('#open')
+const PERCENT_SAVING = document.querySelector('#percentSaving')
 const uuid = () => {
     return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
         var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
@@ -56,18 +57,19 @@ const updateCalc = () => {
     for(const line of lines) {
         total += line.amount
     }
-    saving = 0.25 * total
+    saving = PERCENT_SAVING.value / 100 * total
     pleasure = total - saving
 
     TOTAL.innerHTML = total.toFixed(2) + '&nbsp;&nbsp;€'
     SAVING.innerHTML = saving.toFixed(2) + ' €'
     PLEASURE.innerHTML = pleasure.toFixed(2) + ' €'
+    console.log(PERCENT_SAVING.value / 100);
 }
 
 const dowload = () => {
     let data = JSON.stringify({
         salary: SALARY.value,
-        saving: 0.25,
+        saving: PERCENT_SAVING.value,
         lines: lines
     })
     let blob = new Blob([data], { type: 'text/plain' }) // application/json est jugé dangereux et n'est pas télécharger
@@ -158,23 +160,27 @@ OPEN.addEventListener('click', () => {
         let file = Array.from(input.files)[0];
         let content = JSON.parse(await file.text())
         SALARY.value = content.salary
-        //SAVING setup
+        PERCENT_SAVING.value = content.saving
+        document.querySelector('#infoSaving').setAttribute('aria-label', PERCENT_SAVING.value + '% du total')
         lines = []
         for(const l of content.lines) {
-            console.log(l);
             lines.push(new Line(l.label, l.amount))
         }
         TBODY.innerHTML = getDisplay(lines)
-    updateCalc()
+        updateCalc()
     };
     input.click();
 })
 
+PERCENT_SAVING.addEventListener('change', () => {
+    document.querySelector('#infoSaving').setAttribute('aria-label', PERCENT_SAVING.value + '% du total')
+    updateCalc()
+})
+
 let exLine = [
     new Line("Loyer", -640),
-    new Line("APL", 106),
     new Line("Electricté", -47),
-    new Line("Course", -70)
+    new Line("Internet", -48)
 ]
 
 let file = null
