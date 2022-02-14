@@ -139,9 +139,17 @@ h1 {
 .resultLine {
     display: flex;
     flex: 1;
-    width: 33%;
+    width: 50%;
     justify-content: space-between;
     font-size: 1.2rem;
+}
+.resultLine .salary {
+    position: absolute;
+    margin-left: 300px;
+}
+.resultLine .salary > input {
+    width: 25px;
+    padding-left: 10px;
 }
 
 div.btn {
