@@ -18,7 +18,7 @@ body {
     display: flex;
     flex-direction: column;
     width: 50%;
-    height: 80%;
+    height: 95%;
     border: solid 1px var(--color-primary);
     border-radius: 15px;
 }
@@ -121,7 +121,7 @@ h1 {
 .resultLine {
     display: flex;
     flex: 1;
-    width: 25%;
+    width: 33%;
     justify-content: space-between;
     font-size: 1.2rem;
 }

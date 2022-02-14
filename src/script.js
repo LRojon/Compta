@@ -33,14 +33,14 @@ const getDisplay = (lines) => {
     let ret = ""
     for(const line of lines) {
         ret +=  '       <tr uid="' + line.uid + '">'
-        ret +=  '           <td contenteditable="True" role="editable">' + line.label + '</td>'
+        ret +=  '           <td contenteditable="True" role="labelEditable">' + line.label + '</td>'
         ret +=  '           <td contenteditable="True" role="amountEditable">' + line.amount.toFixed(2) + '&nbsp;&nbsp;€</td>'
         ret +=  '           <td><div class="btn remove" role="remove" ><i style="color: white" class="fas fa-times" role="remove" ></i></d></td>'
         ret +=  '       </tr>'
     }
     ret +=  '       <tr>'
     ret +=  '           <td contenteditable="True" id="newLabel" ></td>'
-    ret +=  '           <td contenteditable="True" id="newAmount" ></td>'
+    ret +=  '           <td contenteditable="True" id="newAmount" role="add" ></td>'
     ret +=  '           <td><div class="btn add" role="add" ><i style="color: white" class="fas fa-plus" role="add" ></i></div></td>'
     ret +=  '       </tr>'
 
@@ -63,25 +63,65 @@ const updateCalc = () => {
 }
 
 TAB.addEventListener('click', (e) => {
-    if(e.target && e.target.getAttribute('role') === "remove") {
-        let uid = ''
-        if(e.target.nodeName == 'I') {          uid = e.target.parentNode.parentNode.parentNode.getAttribute('uid') }
-        else if(e.target.nodeName == 'DIV' ) {  uid = e.target.parentNode.parentNode.getAttribute('uid') }
-
-        lines = lines.filter(el => el.uid != uid)
-        TBODY.innerHTML = getDisplay(lines)
-        updateCalc()
+    if(e.target){
+        switch(e.target.getAttribute('role')) {
+            case "remove":
+                let uid = ''
+                if(e.target.nodeName == 'I') {          uid = e.target.parentNode.parentNode.parentNode.getAttribute('uid') }
+                else if(e.target.nodeName == 'DIV' ) {  uid = e.target.parentNode.parentNode.getAttribute('uid') }
+        
+                lines = lines.filter(el => el.uid != uid)
+                TBODY.innerHTML = getDisplay(lines)
+                updateCalc()
+                break;
+            case "add":
+                let newLabel = document.querySelector('#newLabel').innerHTML.replace('<br>', '')
+                let newAmount = document.querySelector('#newAmount').innerHTML.replace('<br>', '') != '' ? parseFloat(document.querySelector('#newAmount').innerHTML.replace('<br>', '')) : 0
+                lines.push(new Line(newLabel, newAmount))
+                TBODY.innerHTML = getDisplay(lines)
+                updateCalc()
+                break;
+        }
     }
 })
 TAB.addEventListener('focusout', (e) => {
-    if(e.target && (e.target.nodeName == 'TD' && e.target.getAttribute('role') === "amountEditable")) {
-        let newAmount = parseFloat(e.target.innerHTML.trim().replace('&nbsp;', '').replace('€', ''))
-        let line = lines.find(el => el.uid === e.target.parentNode.getAttribute('uid'))
-        line.amount = newAmount
-        e.target.innerHTML = line.amount.toFixed(2) + '&nbsp;&nbsp;€'
-        updateCalc()
+    if(e.target){
+        let line = null
+        if(e.target.nodeName = "TD") { line = lines.find(el => el.uid === e.target.parentNode.getAttribute('uid')) }
+        switch(e.target.getAttribute('role')) {
+            case "amountEditable":
+                let newAmount = parseFloat(e.target.innerHTML.replace('<br>', '').trim().replace('&nbsp;', '').replace('€', ''))
+                line.amount = newAmount
+                e.target.innerHTML = line.amount.toFixed(2) + '&nbsp;&nbsp;€'
+                updateCalc()
+                break;
+            case "labelEditable":
+                let newLabel = e.target.innerHTML.replace('<br>', '').trim()
+                line.label = newLabel
+                e.target.innerHTML = newLabel
+                break;
+            case "add":
+                let newLineLabel = document.querySelector('#newLabel').innerHTML.replace('<br>', '')
+                let newLineAmount = document.querySelector('#newAmount').innerHTML.replace('<br>', '') != '' ? parseFloat(document.querySelector('#newAmount').innerHTML.replace('<br>', '')) : 0
+                lines.push(new Line(newLineLabel, newLineAmount))
+                TBODY.innerHTML = getDisplay(lines)
+                updateCalc()
+                break;
+        }
     }
 })
+TAB.addEventListener('focus', (e) => {
+    if(e.target) {
+        switch (e.target.getAttribute('role')) {
+            case "amountEditable":
+                let line = lines.find(el => el.uid === e.target.parentNode.getAttribute('uid'))
+                e.target.innerHTML = line.amount
+                break;
+            default:
+                break;
+        }
+    }
+}, true)
 SALARY.addEventListener('change', () => {
     updateCalc()
 })
@@ -104,3 +144,18 @@ for(const line of exLine){
 TBODY.innerHTML = getDisplay(lines)
 updateCalc()
 
+
+/*
+
+{
+    salary: number,
+    saving: number
+    lines: [
+        {
+            label: string,
+            amount: number
+        }
+    ]
+}
+
+*/
