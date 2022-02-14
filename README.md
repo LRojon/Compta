@@ -12,4 +12,4 @@
 - [x] Calcule plaisir
 - [ ] Personalisation de l'économie
 - [x] Export des lignes
-- [ ] Import des lignes
+- [x] Import des lignes

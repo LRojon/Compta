@@ -5,6 +5,7 @@ const PLEASURE = document.querySelector('#pleasure')
 const TOTAL = document.querySelector('#total')
 const TBODY = document.querySelector('#tab tbody')
 const SAVE = document.querySelector('#save')
+const OPEN = document.querySelector('#open')
 const uuid = () => {
     return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
         var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
@@ -69,7 +70,7 @@ const dowload = () => {
         saving: 0.25,
         lines: lines
     })
-    let blob = new Blob([data], { type: 'text/plain' })
+    let blob = new Blob([data], { type: 'text/plain' }) // application/json est jugé dangereux et n'est pas télécharger
     if(file !== null) { window.URL.revokeObjectURL(file) }
     file = window.URL.createObjectURL(blob)
 
@@ -89,11 +90,13 @@ TAB.addEventListener('click', (e) => {
                 updateCalc()
                 break;
             case "add":
-                let newLabel = document.querySelector('#newLabel').innerHTML.replace('<br>', '')
-                let newAmount = document.querySelector('#newAmount').innerHTML.replace('<br>', '') != '' ? parseFloat(document.querySelector('#newAmount').innerHTML.replace('<br>', '')) : 0
-                lines.push(new Line(newLabel, newAmount))
-                TBODY.innerHTML = getDisplay(lines)
-                updateCalc()
+                if(e.target.nodeName == 'I' || e.target.nodeName == 'DIV') {
+                    let newLabel = document.querySelector('#newLabel').innerHTML.replace('<br>', '')
+                    let newAmount = document.querySelector('#newAmount').innerHTML.replace('<br>', '') != '' ? parseFloat(document.querySelector('#newAmount').innerHTML.replace('<br>', '')) : 0
+                    lines.push(new Line(newLabel, newAmount))
+                    TBODY.innerHTML = getDisplay(lines)
+                    updateCalc()
+                }
                 break;
         }
     }
@@ -113,13 +116,6 @@ TAB.addEventListener('focusout', (e) => {
                 let newLabel = e.target.innerHTML.replace('<br>', '').trim()
                 line.label = newLabel
                 e.target.innerHTML = newLabel
-                break;
-            case "add":
-                let newLineLabel = document.querySelector('#newLabel').innerHTML.replace('<br>', '')
-                let newLineAmount = document.querySelector('#newAmount').innerHTML.replace('<br>', '') != '' ? parseFloat(document.querySelector('#newAmount').innerHTML.replace('<br>', '')) : 0
-                lines.push(new Line(newLineLabel, newLineAmount))
-                TBODY.innerHTML = getDisplay(lines)
-                updateCalc()
                 break;
         }
     }
@@ -154,6 +150,25 @@ SAVE.addEventListener('click', () => {
     })
 }, false)
 
+OPEN.addEventListener('click', () => {
+    let input = document.createElement('input');
+    input.type = 'file';
+    input.accept = '.cpt'
+    input.onchange = async _ => {
+        let file = Array.from(input.files)[0];
+        let content = JSON.parse(await file.text())
+        SALARY.value = content.salary
+        //SAVING setup
+        lines = []
+        for(const l of content.lines) {
+            console.log(l);
+            lines.push(new Line(l.label, l.amount))
+        }
+        TBODY.innerHTML = getDisplay(lines)
+    updateCalc()
+    };
+    input.click();
+})
 
 let exLine = [
     new Line("Loyer", -640),
