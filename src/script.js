@@ -4,6 +4,7 @@ const SAVING = document.querySelector('#saving')
 const PLEASURE = document.querySelector('#pleasure')
 const TOTAL = document.querySelector('#total')
 const TBODY = document.querySelector('#tab tbody')
+const SAVE = document.querySelector('#save')
 const uuid = () => {
     return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
         var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
@@ -60,6 +61,19 @@ const updateCalc = () => {
     TOTAL.innerHTML = total.toFixed(2) + '&nbsp;&nbsp;€'
     SAVING.innerHTML = saving.toFixed(2) + ' €'
     PLEASURE.innerHTML = pleasure.toFixed(2) + ' €'
+}
+
+const dowload = () => {
+    let data = JSON.stringify({
+        salary: SALARY.value,
+        saving: 0.25,
+        lines: lines
+    })
+    let blob = new Blob([data], { type: 'text/plain' })
+    if(file !== null) { window.URL.revokeObjectURL(file) }
+    file = window.URL.createObjectURL(blob)
+
+    return file
 }
 
 TAB.addEventListener('click', (e) => {
@@ -122,9 +136,23 @@ TAB.addEventListener('focus', (e) => {
         }
     }
 }, true)
+
 SALARY.addEventListener('change', () => {
     updateCalc()
 })
+
+SAVE.addEventListener('click', () => {
+    let link = document.createElement('a')
+    document.body.appendChild(link)
+    link.download = "compta.cpt"
+    link.href = dowload()
+
+    window.requestAnimationFrame(() => {
+        let event = new MouseEvent('click')
+        link.dispatchEvent(event)
+        document.body.removeChild(link)
+    })
+}, false)
 
 
 let exLine = [
@@ -134,7 +162,7 @@ let exLine = [
     new Line("Course", -70)
 ]
 
-
+let file = null
 let lines = []
 for(const line of exLine){
     line.amount = line.amount
